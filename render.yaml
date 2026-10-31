@@ -1,0 +1,28 @@
+services:
+  - type: worker
+    name: cuoc-doi-toi-telegram-bot
+    runtime: python
+    plan: starter
+    buildCommand: pip install -r requirements.txt
+    startCommand: python bot.py
+    disk:
+      name: bot-data
+      mountPath: /var/data
+      sizeGB: 1
+    envVars:
+      - key: BOT_TOKEN
+        sync: false
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: OPENAI_MODEL
+        value: gpt-4.1-mini
+      - key: GROUP_ID
+        sync: false
+      - key: DB_PATH
+        value: /var/data/bot.db
+      - key: WELCOME_TEXT
+        value: "🎉 Chào mừng {name} đến với CUỘC ĐỜI TÔI! Vui lòng đọc nội quy nhóm nhé."
+      - key: WELCOME_PHOTO_URL
+        sync: false
+      - key: SYSTEM_PROMPT
+        value: "Bạn là trợ lý thân thiện của nhóm Telegram CUỘC ĐỜI TÔI. Trả lời bằng tiếng Việt, ngắn gọn, lịch sự. Không bịa thông tin."
